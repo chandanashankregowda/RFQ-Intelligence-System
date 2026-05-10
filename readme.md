@@ -167,6 +167,8 @@ pip install fastapi langchain langgraph chromadb pymupdf pandas requests python-
 
 Automate RFQ PDF ingestion from Google Drive
 
+https://drive.google.com/drive/folders/1vBMW7ACTXMqwJpngg66SjzG0skxvt5Ww?usp=drive_link
+
 ## Steps
 
 - Create Google Cloud project
