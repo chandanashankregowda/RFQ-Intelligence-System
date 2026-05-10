@@ -1,314 +1,525 @@
-# 🧠 Agentic AI RFQ Intelligence Platform (Production RAG System)
-
-## 📌 Data Source
-Google Drive:
-https://drive.google.com/drive/folders/1vBMW7ACTXMqwJpngg66SjzG0skxvt5Ww?usp=drive_link
+# 🧠 Smart RFQ / Bid Response Agent (Agentic AI + RAG System)
 
 ---
 
-# 🚀 0. PROJECT OBJECTIVE
+# 🎯 1. PROBLEM STATEMENT
 
-## 🎯 Goal
+## 🧾 Real-World Scenario
 
-Build a **production-grade Agentic AI system** that:
+Companies in lighting / infrastructure / manufacturing receive:
 
-- Ingests RFQ PDFs from Google Drive
-- Fetches live procurement bids from API
-- Builds a RAG system over historical RFQs
-- Uses AI agents to reason across:
-  - historical RFQs
-  - live bids
-  - product specs
-  - compliance rules
-- Generates structured procurement recommendations
+- RFQ PDFs (50–300 pages)
+- Email attachments with technical drawings
+- Bill of Quantity (BOQ)
+- Compliance documents (UL, ISO, IEC standards)
+- Installation constraints (site conditions, voltage, area size)
 
 ---
 
-## 🧠 Real-World Use Case
+## ❌ Current Manual Workflow
 
-Procurement teams today manually:
+Teams currently:
 
-- Read RFQ PDFs
-- Search past projects
-- Compare requirements manually
-- Identify suitable products
-
-👉 This system automates all of that using AI agents + RAG.
-
----
-
-## 🏁 FINAL OUTPUT EXAMPLE
-
-3 relevant bids found:
-
-1. Judicial Branch LED Retrofit (Closing in 5 days)
-2. California School Lighting Upgrade
-3. City Hospital Lighting Expansion
-
-Similar Past RFQs:
-- Hospital LED Retrofit 2025
-
-Recommendation:
-- Use UL 1598 certified LED panels
-- Prefer 4000K neutral white lighting
-- Use corrosion-resistant outdoor fixtures
+1. Read full RFQ manually (2–6 hours)
+2. Extract requirements manually
+3. Search past projects manually
+4. Match product catalog manually
+5. Prepare bid response manually
 
 ---
 
-# 🏗️ 1. SYSTEM ARCHITECTURE
+## 🚨 Key Problems
 
-## Components
+- Extremely slow (hours → days)
+- High human dependency
+- Inconsistent output quality
+- Missed compliance constraints
+- Lost business opportunities
 
-### 1. Data Layer
-- Google Drive (RFQs, manuals, catalogs)
-- Procurement API (live bids)
+---
+
+# 🚀 2. TARGET SYSTEM (WHAT YOU ARE BUILDING)
+
+You are building:
+
+> 🧠 “An Autonomous RFQ Intelligence + Bid Response Agent”
+
+---
+
+## 🧠 SYSTEM CAPABILITIES
+
+Given an RFQ (PDF or query), the system will:
+
+### STEP 1 — Understand RFQ
+Extract:
+- product category (LED, panel, outdoor lighting)
+- quantity requirements
+- installation environment
+- compliance standards
+- deadlines
+
+---
+
+### STEP 2 — Retrieve Knowledge (RAG)
+Search:
+- historical RFQs
+- previous bids
+- product catalogs
+- installation manuals
+- compliance documentation
+
+---
+
+### STEP 3 — Reasoning (Agent Layer)
+System determines:
+- best matching products
+- compliance requirements
+- missing information
+- risk factors
+
+---
+
+### STEP 4 — Generate Response
+Outputs:
+- structured RFQ summary
+- product recommendations
+- compliance validation
+- similar past projects
+- missing questions
+
+---
+
+# ⚡ 3. PERFORMANCE REQUIREMENTS (CRITICAL)
+
+This is a production system — speed matters.
+
+---
+
+## ⏱️ LATENCY REQUIREMENTS
+
+| Operation | Max Time |
+|----------|----------|
+| Simple query | 2–4 sec |
+| Medium RFQ (multi-page) | 5–10 sec |
+| Large RFQ (100+ pages) | 10–20 sec |
+| Full analysis + reasoning | < 25 sec |
+
+---
+
+## ⚠️ WHY SPEED MATTERS
+
+Users are procurement engineers who:
+
+- evaluate bids quickly
+- compare multiple RFQs
+- operate under strict deadlines
+
+👉 System must feel like ChatGPT-speed + enterprise intelligence
+
+---
+
+# 🏗️ 4. SYSTEM ARCHITECTURE
+
+---
+
+## 🧩 LAYERS
+
+### 1. Input Layer
+- PDF RFQs
+- Google Drive ingestion
+- Chat queries
+
+---
 
 ### 2. Processing Layer
-- PDF extraction
+- PDF text extraction
 - cleaning
-- chunking
+- structure detection
+
+---
 
 ### 3. RAG Layer
 - embeddings
 - vector database (Chroma / FAISS)
-
-### 4. Agent Layer
-- tool calling system
-- multi-step reasoning
-
-### 5. Backend Layer
-- FastAPI service
-
-### 6. Monitoring Layer
-- logs + evaluation metrics
+- semantic retrieval
 
 ---
 
-# ⚙️ 2. TECH STACK
+### 4. Agent Layer
+- tool selection logic
+- reasoning engine
+- multi-step planning
+
+---
+
+### 5. Backend Layer
+- FastAPI service
+- async processing
+
+---
+
+### 6. Monitoring Layer
+- logs
+- latency tracking
+- evaluation metrics
+
+---
+
+# ⚙️ 5. TECH STACK
 
 - Python 3.10+
 - FastAPI
 - LangChain / LangGraph
 - ChromaDB or FAISS
 - PyMuPDF
-- OpenAI / embeddings model
+- OpenAI / embedding models
 - Docker
+- Requests (API integration)
 
 ---
 
-# 📦 3. IMPLEMENTATION PHASES
+# 📦 6. IMPLEMENTATION PHASES
 
 ---
 
 # 🟦 PHASE 1 — PROJECT SETUP
 
-## Tasks
+## 🎯 Goal
+Create production-ready project structure
 
-- Create project structure:
+---
+
+## 📁 Folder Structure
 
 rfq-system/
 ├── app/
 │   ├── ingestion/
+│   ├── processing/
 │   ├── rag/
 │   ├── agents/
 │   ├── tools/
 │   ├── api/
 ├── data/
 ├── vector_db/
+├── logs/
 ├── main.py
+├── requirements.txt
 
-- Install dependencies:
+---
 
-pip install fastapi langchain chromadb pymupdf pandas requests
+## 📌 Install Dependencies
+
+pip install fastapi langchain langgraph chromadb pymupdf pandas requests python-dotenv
 
 ---
 
 # 🟩 PHASE 2 — GOOGLE DRIVE INGESTION
 
-## Tasks
-
-- Setup Google Cloud project
-- Enable Drive API
-- Create service account
-- Authenticate and access RFQ folder
-- Download PDFs automatically
-
-## Output
-
-File metadata structure:
-
-- file_name
-- file_id
-- last_modified
+## 🎯 Goal
+Automatically ingest RFQ PDFs from Drive
 
 ---
 
-# 🟨 PHASE 3 — PDF PROCESSING
+## TASKS
 
-## Tasks
+- Setup Google Cloud Project
+- Enable Google Drive API
+- Create service account
+- Authenticate system
+- Access RFQ folder
+
+---
+
+## SYSTEM BEHAVIOR
+
+- Detect new files
+- Download PDFs automatically
+- Track file updates
+
+---
+
+## OUTPUT FORMAT
+
+{
+  "file_name": "hospital_rfq.pdf",
+  "file_id": "abc123",
+  "last_modified": "2026-05-01"
+}
+
+---
+
+# 🟨 PHASE 3 — PDF PROCESSING ENGINE
+
+## 🎯 Goal
+Convert RFQ PDFs → structured text
+
+---
+
+## TASKS
 
 - Extract text using PyMuPDF
-- Convert PDF → structured text
-- Maintain page-level metadata
-
-## Cleaning rules
-
-Remove:
-- headers
-- footers
-- page numbers
+- Maintain page-wise structure
+- Remove noise (headers/footers/page numbers)
 
 ---
 
-# 🟧 PHASE 4 — CHUNKING
+## OUTPUT
 
-## Rules
+{
+  "doc_id": "RFQ_001",
+  "page": 3,
+  "text": "All LED fixtures must comply with UL 1598 standards."
+}
+
+---
+
+# 🟧 PHASE 4 — DOCUMENT CHUNKING
+
+## 🎯 Goal
+Prepare data for RAG system
+
+---
+
+## RULES
 
 - Chunk size: 800–1200 tokens
 - Overlap: 150–200 tokens
-- Preserve metadata
-
-## Output
-
-Each chunk contains:
-
-- text
-- doc_id
-- page number
+- Preserve semantic meaning
 
 ---
 
-# 🟪 PHASE 5 — EMBEDDINGS
+## OUTPUT
 
-## Tasks
+{
+  "chunk_id": "c001",
+  "text": "Outdoor lighting must withstand corrosion...",
+  "doc_id": "RFQ_001",
+  "page": 4
+}
 
-- Convert chunks into embeddings
+---
+
+# 🟪 PHASE 5 — EMBEDDING PIPELINE
+
+## 🎯 Goal
+Convert text into vector embeddings
+
+---
+
+## TASKS
+
 - Use OpenAI or sentence-transformers
-- Store vectors
+- Generate embeddings for each chunk
+- Store vectors with metadata
 
 ---
 
-# 🟥 PHASE 6 — VECTOR DATABASE
+# 🟥 PHASE 6 — VECTOR DATABASE (RAG CORE)
 
-## Tasks
-
-- Store embeddings in ChromaDB / FAISS
-- Enable semantic search
-
-## Flow
-
-User Query → Embedding → Vector Search → Top-K chunks
+## 🎯 Goal
+Enable semantic search
 
 ---
 
-# 🟫 PHASE 7 — PROCUREMENT API
+## FLOW
+
+User Query →
+Embedding →
+Vector DB Search →
+Top-K relevant chunks
+
+---
+
+# 🟫 PHASE 7 — PROCUREMENT API INTEGRATION
 
 API:
 https://bid-data.onrender.com/bid
 
-## Tasks
+---
+
+## TASKS
 
 - Fetch live bids
-- Normalize JSON
-- Convert to structured dataset
-- Schedule periodic updates
+- Normalize JSON response
+- Filter by:
+  - deadline
+  - department
+  - status
+
+---
+
+## OUTPUT
+
+{
+  "event_name": "LED Retrofit Project",
+  "department": "Government Housing",
+  "deadline": "2026-05-15"
+}
 
 ---
 
 # 🟦 PHASE 8 — RAG RETRIEVAL ENGINE
 
-## Flow
+## FLOW
 
 User Query →
 Embedding →
-Vector DB Search →
+Vector DB →
 Top-K RFQ chunks
 
 ---
 
-# 🟩 PHASE 9 — CONTEXT FUSION
+# 🟩 PHASE 9 — CONTEXT FUSION ENGINE
 
-Combine:
+## INPUTS
 
-- RFQ historical data (RAG)
-- Live bids (API)
-
-Final merged context is sent to LLM.
+- RAG results (historical RFQs)
+- Live API bids
 
 ---
 
-# 🧠 PHASE 10 — AGENT SYSTEM
+## OUTPUT
 
-## Tools
+Unified context passed to LLM:
 
-- Drive Tool → fetch RFQs
-- API Tool → fetch bids
-- Web Tool → compliance checks
+{
+  "rfq_context": [],
+  "live_bids": [],
+  "final_context": "merged input"
+}
 
-## Behavior
+---
+
+# 🧠 PHASE 10 — AGENT SYSTEM (CORE INTELLIGENCE)
+
+---
+
+## TOOLS
+
+### 1. Drive Tool
+- fetch RFQs
+
+### 2. API Tool
+- fetch live bids
+
+### 3. Web Tool
+- compliance checks (UL, ISO, etc.)
+
+---
+
+## AGENT BEHAVIOR
 
 Agent decides:
 
 - when to search documents
 - when to call API
 - when to use web search
+- how to combine results
 
 ---
 
 # 🧾 PHASE 11 — RESPONSE GENERATION
 
-## Output format
+---
 
-- Bid summary
-- Matching RFQs
-- Recommendations
-- Compliance notes
+## OUTPUT FORMAT
+
+📌 RFQ Summary:
+- Hospital lighting project
+
+📌 Requirements:
+- LED panels required
+- UL 1598 compliance
+
+📌 Similar Projects:
+- Hospital Retrofit 2025
+
+📌 Recommendation:
+- 40W LED panels
+- 4000K neutral white
+- IP65-rated fixtures
+
+📌 Missing Info:
+- Ceiling height not specified
 
 ---
 
-# 🚀 PHASE 12 — DEPLOYMENT
+# 🚀 PHASE 12 — PRODUCTION DEPLOYMENT
 
-## Backend
+---
+
+## BACKEND
 
 FastAPI endpoints:
 
-- /query → main agent interface
-- /ingest → trigger ingestion
-- /bids → fetch live bids
+- POST /query → main agent
+- POST /ingest → ingest RFQs
+- GET /bids → fetch live bids
 
-## Deployment
+---
 
-- Docker container
+## DEPLOYMENT
+
+- Dockerize system
 - Deploy on AWS / GCP / Azure
+
+---
+
+## BACKGROUND JOBS
+
+- Drive sync every 1 hour
+- API sync every 30 minutes
 
 ---
 
 # 📊 PHASE 13 — MONITORING
 
-Track:
+---
+
+## METRICS
 
 - retrieval accuracy
-- response latency
+- latency
 - hallucination rate
-- bid match quality
+- bid matching quality
 
-Use:
+---
+
+## TOOLS
 
 - logging system
 - LangSmith (optional)
+- OpenTelemetry (optional)
 
 ---
 
 # 🏁 FINAL SYSTEM BEHAVIOR
 
-System acts as:
+System behaves like:
 
-👉 Autonomous AI Procurement Analyst
+> 🧠 “A senior procurement engineer who never sleeps”
 
 It can:
 
-- read RFQs
-- monitor live bids
-- retrieve past knowledge
-- generate recommendations
-- assist in real bidding decisions
+- read RFQs automatically
+- extract requirements
+- match historical projects
+- analyze live bids
+- generate structured proposals
+- respond in seconds
+
+---
+
+# 🎓 FINAL OUTCOME
+
+You are building a:
+
+> 🔥 Production-grade Agentic AI + RAG system for enterprise RFQ intelligence
+
+Not a chatbot.
+
+Not a search tool.
+
+But:
+
+> 🧠 A decision-making procurement intelligence engine
