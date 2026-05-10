@@ -402,3 +402,299 @@ The system behaves as an autonomous procurement intelligence assistant that:
 # Final Outcome
 
 A production-grade Agentic AI + RAG system for RFQ intelligence automation in real-world procurement workflows.
+
+---
+
+# RFQ / RFP Agent Evaluation Set (Lighting Retrofit Documents)
+
+---
+
+# 1. Document Understanding Tasks
+
+## Q1
+Input:
+"Summarize the League City Retrofit Lighting RFP"
+
+Expected Output:
+- Project type: municipal lighting retrofit
+- Scope: replace existing lighting with energy-efficient LED systems
+- Sites included: public buildings / streets / facilities (as per document)
+- Key goals: energy savings, compliance, maintenance reduction
+- Bid requirement overview: submission format, deadlines, compliance docs
+
+---
+
+## Q2
+Input:
+"What is the scope of work in the City of Scranton LED Retrofit Bid?"
+
+Expected Output:
+- LED replacement across municipal infrastructure
+- Removal of existing lighting fixtures
+- Installation of energy-efficient LED systems
+- Testing and commissioning requirements
+- Disposal of old fixtures (if mentioned)
+- Maintenance / warranty obligations
+
+---
+
+## Q3
+Input:
+"Extract key technical requirements from California Judicial Council Lighting RFP"
+
+Expected Output:
+- Lighting efficiency standards
+- Compliance requirements (energy codes / UL / Title 24 if applicable)
+- Fixture specifications (LED type, wattage range)
+- Control systems (dimming / automation if included)
+- Safety and installation standards
+
+---
+
+# 2. Compliance & Constraints
+
+## Q4
+Input:
+"What compliance standards are required in these government lighting RFPs?"
+
+Expected Output:
+- Energy efficiency standards (state/federal codes)
+- UL certification requirements
+- Electrical safety standards
+- Environmental compliance (energy conservation mandates)
+- Local government procurement rules
+
+---
+
+## Q5
+Input:
+"Are there any strict installation constraints in school district lighting projects?"
+
+Expected Output:
+- Work must be done during non-school hours (if specified)
+- Safety compliance for students/staff
+- Noise and disruption restrictions
+- Phased installation requirements
+- Restricted access zones
+
+---
+
+# 3. Product Recommendation Tasks
+
+## Q6
+Input:
+"What LED products are suitable for Irvine Unified School District Lighting Retrofit?"
+
+Expected Output:
+- LED panel lights (4000K–5000K range)
+- High-efficiency ceiling fixtures
+- Motion sensor-enabled lighting systems
+- Low glare educational environment lighting
+- Long-life (>50,000 hours) fixtures
+
+---
+
+## Q7
+Input:
+"Suggest lighting solutions for government retrofit projects"
+
+Expected Output:
+- High-efficiency LED retrofit kits
+- Smart lighting controls (dimming + occupancy sensors)
+- Outdoor-rated LED fixtures (IP65+)
+- Energy Star certified products
+- Modular retrofit systems for scalability
+
+---
+
+## Q8
+Input:
+"What is the most cost-effective solution for large-scale municipal lighting retrofit?"
+
+Expected Output:
+- Bulk LED retrofit kits
+- Standardized fixture replacement strategy
+- Reduced wiring modification approach
+- Use of existing fixture housings where possible
+- Phased deployment strategy
+
+---
+
+# 4. Bid Intelligence & Matching
+
+## Q9
+Input:
+"Which of these RFPs are similar in structure?"
+
+Expected Output:
+- League City Retrofit ↔ City of Scranton (municipal retrofit similarity)
+- California Judicial Council ↔ Irvine School District (institutional lighting upgrade)
+- Similarity reasoning based on:
+  - scope (retrofit)
+  - sector (government/education)
+  - compliance type
+
+---
+
+## Q10
+Input:
+"Match past RFQs with current lighting retrofit projects"
+
+Expected Output:
+- Hospital lighting retrofit ↔ government facility retrofit
+- School lighting upgrade ↔ Irvine school district RFP
+- Municipal street lighting ↔ League City project
+- Similarity scoring (high/medium/low)
+
+---
+
+## Q11
+Input:
+"Which RFP has the highest technical complexity?"
+
+Expected Output:
+- California Judicial Council Lighting RFP
+Reason:
+- strict compliance requirements
+- multi-site complexity
+- advanced energy regulations
+- legal/government oversight
+
+---
+
+# 5. Bid Strategy & Decision Making
+
+## Q12
+Input:
+"Should we bid on the League City Retrofit Lighting project?"
+
+Expected Output:
+- Bid recommendation (Yes/No/Maybe)
+- Reasoning:
+  - scope alignment
+  - competition level (if inferred)
+  - compliance readiness
+  - product match availability
+- Risk factors
+- Opportunity score (0–100)
+
+---
+
+## Q13
+Input:
+"What is the winning strategy for school district lighting projects?"
+
+Expected Output:
+- low-disruption installation strategy
+- energy efficiency positioning
+- safety compliance emphasis
+- long-term maintenance advantage
+- cost optimization approach
+
+---
+
+# 6. Document Intelligence
+
+## Q14
+Input:
+"What are the key deadlines and submission rules?"
+
+Expected Output:
+- bid submission deadline(s)
+- document format requirements
+- mandatory certifications
+- pre-bid meeting requirements
+- evaluation criteria summary
+
+---
+
+## Q15
+Input:
+"What information is missing or unclear in these RFPs?"
+
+Expected Output:
+- incomplete electrical load details (if any)
+- missing fixture counts (if not specified)
+- unclear installation schedule
+- missing pricing breakdown structure
+- missing site measurement details
+
+---
+
+# 7. Multi-Document Reasoning
+
+## Q16
+Input:
+"Compare municipal vs school district lighting RFPs"
+
+Expected Output:
+- Municipal:
+  - outdoor + infrastructure focus
+  - higher durability requirements
+- School District:
+  - indoor lighting focus
+  - strict safety + low disruption
+- Differences in compliance, installation timing, and product types
+
+---
+
+## Q17
+Input:
+"Which RFP is easiest to execute?"
+
+Expected Output:
+Ranking:
+1. Municipal simple retrofit (low complexity)
+2. School district lighting upgrade (medium complexity)
+3. Judicial council lighting (high complexity)
+
+Reasoning:
+- compliance strictness
+- site complexity
+- installation constraints
+
+---
+
+# 8. System Explainability
+
+## Q18
+Input:
+"Explain how this recommendation was generated"
+
+Expected Output:
+- Retrieved RFQs from vector DB
+- Matched lighting retrofit patterns
+- Extracted compliance constraints
+- Filtered product catalog
+- Generated final reasoning via LLM
+
+---
+
+## Q19
+Input:
+"What sources were used?"
+
+Expected Output:
+- League City Retrofit RFP
+- City of Scranton LED Bid Docs
+- California Judicial Council Lighting RFP
+- Irvine Unified School District RFP
+- Chunk references from vector database
+
+---
+
+# 9. Advanced Agentic Task
+
+## Q20
+Input:
+"Find all active lighting retrofit opportunities, match them with past RFQs, and recommend best bidding strategy"
+
+Expected Output:
+- List of active bids (API)
+- Matched historical RFQs (RAG)
+- Similarity mapping
+- Ranked opportunities
+- Final bidding strategy:
+  - which to prioritize
+  - risk vs reward
+  - product alignment
